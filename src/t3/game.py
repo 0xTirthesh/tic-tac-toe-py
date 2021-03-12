@@ -1,3 +1,5 @@
+from time import sleep
+
 from t3.constants import BOARD, CROSS, OH, P1️, P2️, P3️, P4️, P5️, P6️, P7️, P8️, P9️
 
 
@@ -36,6 +38,7 @@ class Game:
             selected_slot = input("Your Selection: ")
             is_selection_valid = self.__handle_selection(selected_slot)
             while not is_selection_valid:
+                sleep(2)
                 selected_slot = input("Please re-select: ")
                 is_selection_valid = self.__handle_selection(selected_slot)
 
@@ -97,7 +100,7 @@ class Game:
             return False
 
         slot_num = int(slot)
-        if slot_num not in range(1, 10):
+        if slot_num < 1 or slot_num > 9:
             print("\nErr! Invalid Input. Only digits from 1-9 (if available) are allowed to be selected.")
             return False
 
@@ -115,5 +118,5 @@ class Game:
         return {
             "board": self.__board,
             "active_player": self.__resolve_player_name(),
-            "winner": self.__is_player_1_winner
+            "is_player_1_winner": self.__is_player_1_winner
         }
