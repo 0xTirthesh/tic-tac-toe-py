@@ -3,11 +3,12 @@ from t3.constants import BOARD, CROSS, OH, P1️, P2️, P3️, P4️, P5️, P6
 
 class Game:
 
-    def __init__(self, against_computer: bool):
+    def __init__(self):
         self.__board = [P1️, P2️, P3️, P4️, P5️, P6️, P7️, P8️, P9️]
         self.__is_player_1s_turn = True
-        self.__playing_against_computer = against_computer
         self.__is_player_1_winner = None
+
+        print(f"\nOkay here is your board. Player 1 plays '{CROSS}' & Player 2 plays '{OH}'")
 
     def display_board(self):
         print(BOARD.format(*self.__board))
@@ -47,14 +48,18 @@ class Game:
         return
 
     def declare_winner(self):
-        pass
+        if self.__is_player_1_winner is None:
+            print("Ahh! It's Tie!")
+        else:
+            name = "Player 1" if self.__is_player_1s_turn else "Player 2"
+            print(f"{name} is winner! Hooray!")
+        return
 
     def __get_symbol(self) -> str:
         return CROSS if self.__is_player_1s_turn else OH
 
     def __resolve_player_name(self) -> str:
-        return "Player 1" if self.__is_player_1s_turn \
-            else ("Computer" if self.__playing_against_computer else "Player 2")
+        return "Player 1" if self.__is_player_1s_turn  else "Player 2"
 
     def __is_game_over(self) -> bool:
         """
@@ -80,10 +85,24 @@ class Game:
         return len(list(spaces)) != 0
 
     def __handle_selection(self, slot: str) -> bool:
-        pass
+        if not slot.isdigit():
+            print("\nErr! Invalid input. Only digits from 1-9 (if available) are allowed to be selected.")
+            return False
+
+        slot_num = int(slot)
+        if slot_num not in range(1, 10):
+            print("\nErr! Invalid Input. Only digits from 1-9 (if available) are allowed to be selected.")
+            return False
+
+        if self.__board[slot_num - 1] in (CROSS, OH):
+            print("\nErr! Invalid Input. The slot is not available.")
+            return False
+
+        return True
 
     def __record_move(self, slot: int):
-        pass
+        self.__board[slot - 1] = self.__get_symbol()
+        return
 
     def get_state(self):
         return {
