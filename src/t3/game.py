@@ -3,12 +3,16 @@ from t3.constants import BOARD, CROSS, OH, P1️, P2️, P3️, P4️, P5️, P6
 
 class Game:
 
-    def __init__(self):
+    def __init__(self, against_computer: bool):
         self.__board = [P1️, P2️, P3️, P4️, P5️, P6️, P7️, P8️, P9️]
         self.__is_player_1s_turn = True
+        self.__playing_against_computer = against_computer
         self.__is_player_1_winner = None
 
-        print(f"\nOkay here is your board. Player 1 plays '{CROSS}' & Player 2 plays '{OH}'")
+        if against_computer:
+            print(f"\nOkay here is your board. Player 1 plays '{CROSS}' & Computer plays '{OH}'")
+        else:
+            print(f"\nOkay here is your board. Player 1 plays '{CROSS}' & Player 2 plays '{OH}'")
 
     def display_board(self):
         print(BOARD.format(*self.__board))
@@ -51,7 +55,9 @@ class Game:
         if self.__is_player_1_winner is None:
             print("Ahh! It's Tie!")
         else:
-            name = "Player 1" if self.__is_player_1s_turn else "Player 2"
+            name = "Player 1" if self.__is_player_1s_turn \
+                else ("Computer" if self.__playing_against_computer else "Player 2")
+
             print(f"{name} is winner! Hooray!")
         return
 
@@ -59,7 +65,8 @@ class Game:
         return CROSS if self.__is_player_1s_turn else OH
 
     def __resolve_player_name(self) -> str:
-        return "Player 1" if self.__is_player_1s_turn  else "Player 2"
+        return "Player 1" if self.__is_player_1s_turn \
+            else ("Computer" if self.__playing_against_computer else "Player 2")
 
     def __is_game_over(self) -> bool:
         """
