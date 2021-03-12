@@ -19,7 +19,21 @@ class TwoPlayerGameTest(BaseTest):
         game.declare_winner()
         state = game.get_state()
         self.assertTrue(state.get('is_player_1_winner'))
-        self.assertEqual(state.get('board'), ['❌', '⭕', '❌', '⭕', '❌', '⭕', '❌', '8️⃣', '9️⃣'])
+        self.assertEqual(['❌', '⭕', '❌', '⭕', '❌', '⭕', '❌', '8️⃣', '9️⃣'], state.get('board'))
+
+    def test_tie(self):
+        game = Game(False)
+
+        @patch('builtins.input')
+        def run(m_input):
+            m_input.side_effect = ['5', '1', '2', '8', '3', '7', '9', '6', '4']
+            game.start()
+
+        run()
+        game.declare_winner()
+        state = game.get_state()
+        self.assertIsNone(state.get('is_player_1_winner'))
+        self.assertEqual(['⭕', '❌', '❌', '❌', '❌', '⭕', '⭕', '⭕', '❌'], state.get('board'))
 
 
 if __name__ == '__main__':

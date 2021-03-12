@@ -81,14 +81,17 @@ class Game:
         if yes then current player is the winner
         """
         symbol = self.__get_symbol()
-        return all(i == symbol for i in self.__board[0:3]) or \
-               all(i == symbol for i in self.__board[3:6]) or \
-               all(i == symbol for i in self.__board[6:8]) or \
-               all(i == symbol for i in (self.__board[0], self.__board[3], self.__board[6])) or \
-               all(i == symbol for i in (self.__board[1], self.__board[4], self.__board[7])) or \
-               all(i == symbol for i in (self.__board[2], self.__board[5], self.__board[8])) or \
-               all(i == symbol for i in (self.__board[0], self.__board[4], self.__board[8])) or \
-               all(i == symbol for i in (self.__board[2], self.__board[4], self.__board[6]))
+
+        result = all(i == symbol for i in self.__board[0:3]) or \
+                 all(i == symbol for i in self.__board[3:6]) or \
+                 all(i == symbol for i in self.__board[6:]) or \
+                 all(i == symbol for i in (self.__board[0], self.__board[3], self.__board[6])) or \
+                 all(i == symbol for i in (self.__board[1], self.__board[4], self.__board[7])) or \
+                 all(i == symbol for i in (self.__board[2], self.__board[5], self.__board[8])) or \
+                 all(i == symbol for i in (self.__board[0], self.__board[4], self.__board[8])) or \
+                 all(i == symbol for i in (self.__board[2], self.__board[4], self.__board[6]))
+
+        return result
 
     def __is_space_left(self) -> bool:
         spaces = filter(lambda x: x not in (CROSS, OH), self.__board)
