@@ -1,4 +1,4 @@
-# CoLearn - Assignment
+# Tic Tac Toe - Python
 
 Command Line 'Tic Tac Toe' game.
 
